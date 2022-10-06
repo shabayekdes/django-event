@@ -1,2 +1,1 @@
 # Django Event
-# Django Event
