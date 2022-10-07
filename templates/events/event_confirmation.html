@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Are you want to confirm?</h3>
+        <input type="submit" value="Submit">
+        <br/>
+        <br/>
+        <span>OR</span>
+        <a href="{% url 'show_event' event.id %}">Go Back</a>
+    </form>
+{% endblock %}

@@ -1,7 +1,18 @@
 {% extends 'main.html' %}
 
 {% block content %}
-
     <h1>{{ event.name }}</h1>
+    <a href="{% url 'event_confirmation' event.id %}">Register</a>
     <p>{{ event.description }}</p>
+
+    <section>
+        <div>
+            <h1>Users</h1>
+            <div id="users--lists">
+                {% for user in participants %}
+                    {{ user.name }}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 {% endblock %}
