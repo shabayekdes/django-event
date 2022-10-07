@@ -9,4 +9,4 @@ class User(AbstractUser):
     hackathon_participant = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']

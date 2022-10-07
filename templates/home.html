@@ -7,7 +7,9 @@
             <h1>Events</h1>
             <div id="events--lists">
                 {% for event in events %}
-                    {{ event.name }}
+                    <a href="{% url 'show_event' event.id %}">
+                        <div>{{ event.name }}</div>
+                    </a>
                 {% endfor %}
             </div>
         </div>
