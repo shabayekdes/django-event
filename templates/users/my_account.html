@@ -1,11 +1,15 @@
 {% extends 'main.html' %}
 {% block content %}
-    <span>Welcome, {{ user.name }}</span>
     <h1>My Account</h1>
+    <span>Welcome, {{ user.name }}</span>
+    {% if not user.events %}
     <h3>My Events</h3>
     {% for event in user.events.all %}
         <a href="{% url 'show_event' event.id %}">
             <div>{{ event.name }}</div>
         </a>
     {% endfor %}
+    {% else %}
+        <p>Don't have any events if you want to create new event.</p>
+    {% endif %}
 {% endblock %}

@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
+from accounts.forms import RegisterUserForm
 from accounts.models import User
 from events.models import Event
 
@@ -58,3 +60,19 @@ def logout_page(request):
         return redirect('home')
 
     return render(request, 'auth/logout.html')
+
+
+def register_page(request):
+    page = "register"
+    form = RegisterUserForm(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=False)
+        user.save()
+        login(request, user)
+        return redirect('home')
+
+    context = {
+        'page': page,
+        'form': form
+    }
+    return render(request, 'auth/login_register.html', context)
