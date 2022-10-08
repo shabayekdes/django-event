@@ -6,7 +6,7 @@ from accounts.models import User
 class Event(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    participants = models.ManyToManyField(User, blank=True)
+    participants = models.ManyToManyField(User, blank=True, related_name="events")
     date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
