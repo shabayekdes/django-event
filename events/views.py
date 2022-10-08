@@ -22,7 +22,7 @@ def show_event(request, pk):
     return render(request, 'events/show_event.html', context)
 
 
-@login_required()
+@login_required(login_url="/login")
 def event_confirmation(request, pk):
     event = Event.objects.get(id=pk)
     if request.method == "POST":
@@ -34,7 +34,7 @@ def event_confirmation(request, pk):
     }
     return render(request, 'events/event_confirmation.html', context)
 
-@login_required()
+@login_required(login_url="/login")
 def submission_project(request, pk):
     event = Event.objects.get(id=pk)
     form = SubmissionForm(request.POST or None)
@@ -51,7 +51,7 @@ def submission_project(request, pk):
     }
     return render(request, 'events/submission_project.html', context)
 
-@login_required()
+@login_required(login_url="/login")
 def update_submission(request, pk):
     submission = Submission.objects.get(id=pk)
     event = submission.event

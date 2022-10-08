@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    {% if page == "register" %}
+        <h1>Login Page</h1>
+
+    {% else %}
+        <h1>Login Page</h1>
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div>
+                <label for="email_input">Email</label>
+                <input type="email" name="email" id="email_input">
+            </div>
+            <div>
+                <label for="password_input">Password</label>
+                <input type="password" name="password" id="password_input" >
+            </div>
+            <input type="submit" value="Login">
+        </form>
+    {% endif %}
+{% endblock content %}
