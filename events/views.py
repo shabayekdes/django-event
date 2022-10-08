@@ -34,6 +34,7 @@ def event_confirmation(request, pk):
     }
     return render(request, 'events/event_confirmation.html', context)
 
+
 @login_required(login_url="/login")
 def submission_project(request, pk):
     event = Event.objects.get(id=pk)
@@ -50,6 +51,7 @@ def submission_project(request, pk):
         'form': form
     }
     return render(request, 'events/submission_project.html', context)
+
 
 @login_required(login_url="/login")
 def update_submission(request, pk):
