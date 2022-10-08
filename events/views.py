@@ -1,14 +1,18 @@
 from django.shortcuts import render, redirect
 
 from events.forms import SubmissionForm
-from events.models import Event
+from events.models import Event, Submission
 
 
 def show_event(request, pk):
     event = Event.objects.get(id=pk)
+    registered = request.user.events.filter(id=event.id).exists()
+    submitted = Submission.objects.filter(participant=request.user, event=event.id).exists()
     context = {
         'event': event,
-        'participants': event.participants.all
+        'participants': event.participants.all,
+        'registered': registered,
+        'submitted': submitted
     }
     return render(request, 'events/show_event.html', context)
 
