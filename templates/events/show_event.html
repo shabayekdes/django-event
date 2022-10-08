@@ -14,6 +14,13 @@
     {% endif %}
     <p>{{ event.description }}</p>
 
+    <h1>Submission Projects</h1>
+    {% for sub in event.submission_set.all %}
+        <a href="{% url 'update_submission' sub.id %}">
+            <div>{{ sub.details }}</div>
+        </a>
+    {% endfor %}
+
     <section>
         <div>
             <h1>Users</h1>

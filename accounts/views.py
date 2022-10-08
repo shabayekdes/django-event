@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from accounts.models import User
@@ -24,7 +25,7 @@ def user_details(request, pk):
     }
     return render(request, 'users/show_details.html', context)
 
-
+@login_required()
 def my_account(request):
     user = request.user
     context = {
