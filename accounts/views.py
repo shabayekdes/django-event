@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
@@ -50,3 +50,11 @@ def login_page(request):
         "page": page
     }
     return render(request, 'auth/login_register.html', context)
+
+
+def logout_page(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect('home')
+
+    return render(request, 'auth/logout.html')
