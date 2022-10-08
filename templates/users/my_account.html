@@ -2,14 +2,24 @@
 {% block content %}
     <h1>My Account</h1>
     <span>Welcome, {{ user.name }}</span>
-    {% if not user.events %}
-    <h3>My Events</h3>
-    {% for event in user.events.all %}
-        <a href="{% url 'show_event' event.id %}">
-            <div>{{ event.name }}</div>
-        </a>
-    {% endfor %}
+    {% if user.events %}
+        <h3>My Events</h3>
+        {% for event in user.events.all %}
+            <a href="{% url 'show_event' event.id %}">
+                <div>{{ event.name }}</div>
+            </a>
+        {% endfor %}
     {% else %}
         <p>Don't have any events if you want to create new event.</p>
+    {% endif %}
+    {% if submissions %}
+        <h3>My Submission Projects</h3>
+        {% for submission in submissions %}
+            <a href="{% url 'update_submission' submission.id %}">
+                <div>{{ submission.details }}</div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <p>Don't have any projects.</p>
     {% endif %}
 {% endblock %}
