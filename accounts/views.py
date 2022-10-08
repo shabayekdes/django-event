@@ -12,9 +12,11 @@ def home_page(request):
     users = User.objects.filter(hackathon_participant=True)
     events = Event.objects.all()
 
+    print()
     context = {
         'users': users,
-        'events': events
+        'events': events,
+        'events_range': range(events.count())
     }
     return render(request, 'home.html', context)
 

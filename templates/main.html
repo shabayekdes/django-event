@@ -16,12 +16,19 @@
 </head>
 <body>
 <div class="container-fluid">
-    {% include 'navbar.html' %}
+    <header>
+        {% include 'navbar.html' %}
+    </header>
 </div>
-<div class="container">
+<main>
     {% block content %}
     {% endblock content %}
-</div>
+    <!-- FOOTER -->
+    <footer class="container">
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>&copy; 2022 Shabayek Des, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
         crossorigin="anonymous"></script>

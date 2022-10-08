@@ -2,27 +2,63 @@
 
 {% block content %}
 
-    <section>
-        <div>
-            <h1>Events</h1>
-            <div id="events--lists">
-                {% for event in events %}
-                    <a href="{% url 'show_event' event.id %}">
-                        <div>{{ event.name }}</div>
-                    </a>
-                {% endfor %}
-            </div>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for i in events_range %}
+                <button type="button" data-bs-target="#myCarousel"
+                        data-bs-slide-to="{{ i }}" {% if forloop.first %}class="active" aria-current="true"{% endif %}
+                        aria-label="Slide {{ i }}"></button>
+            {% endfor %}
         </div>
-    </section>
-    <section>
-        <div>
-            <h1>Users</h1>
-            <div id="users--lists">
-                {% for user in users %}
-                    {{ user.name }}
-                {% endfor %}
-            </div>
+        <div class="carousel-inner">
+            {% for event in events %}
+                <div class="carousel-item{{ forloop.first|yesno:" active," }}">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                         aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <rect width="100%" height="100%" fill="#777"/>
+                    </svg>
+
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <h1>{{ event.name }}</h1>
+                            <p><a class="btn btn-lg btn-primary" href="{% url 'show_event' event.id %}">Show Event</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    </section>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!-- Marketing messaging and featurettes
+================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+        <h2 class="pb-2 border-bottom">Hackathon Participants</h2><br />
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+            {% for user in users %}
+                <div class="col-lg-4">
+                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140"
+                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140"
+                         preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#777"/>
+                        <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
+                    </svg>
+
+                    <h2 class="fw-normal">{{ user.name }}</h2>
+                    <p><a class="btn btn-secondary" href="{% url 'user_details' user.id %}">View Profile &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+            {% endfor %}
+
+        </div><!-- /.row -->
 
 {% endblock %}
