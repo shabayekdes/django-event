@@ -10,11 +10,13 @@ from events.models import Event, Submission
 # Create your views here.
 def home_page(request):
     users = User.objects.filter(hackathon_participant=True)
+    users_count = users.count()
+    users = users[0:9]
     events = Event.objects.all()
 
-    print()
     context = {
         'users': users,
+        'users_count': users_count,
         'events': events,
         'events_range': range(events.count())
     }
@@ -40,7 +42,7 @@ def my_account(request):
         'user': user,
         'submissions': submissions
     }
-    return render(request, 'users/my_account.html', context)
+    return render(request, 'auth/my_account.html', context)
 
 
 def login_page(request):
