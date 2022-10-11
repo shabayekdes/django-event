@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from accounts.forms import RegisterUserForm
+from accounts.forms import RegisterUserForm, UpdateAccountForm
 from accounts.models import User
 from events.models import Event, Submission
 
@@ -36,13 +36,21 @@ def user_details(request, pk):
 def my_account(request):
     user = request.user
     submissions = Submission.objects.filter(participant=user)
-
-    print(submissions)
     context = {
         'user': user,
         'submissions': submissions
     }
     return render(request, 'auth/my_account.html', context)
+
+@login_required(login_url="/login")
+def update_account(request):
+    user = request.user
+    form = UpdateAccountForm(request.POST or None, request.FILES, instance=user)
+    context = {
+        'user': user,
+        'form': form
+    }
+    return render(request, 'auth/update_account.html', context)
 
 
 def login_page(request):
