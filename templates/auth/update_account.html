@@ -5,12 +5,15 @@
         <h2 class="p-3 border-bottom">Update My Account</h2>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {% for field in form %}
 
+            {% for field in form %}
                 <div class="mb-3">
-                    {{ field.errors }}
                     {{ field.label_tag }}<br/>
                     {{ field }}
+                    {% for error in field.errors %}
+                        <p class="text-danger">{{ error|escape }}</p>
+                    {% endfor %}
+
                     {% if field.help_text %}
                         <p class="help">{{ field.help_text|safe }}</p>
                     {% endif %}

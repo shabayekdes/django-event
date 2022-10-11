@@ -9,7 +9,9 @@ class UpdateAccountForm(forms.ModelForm):
         model = User
         fields = ['username', 'email', 'name', 'avatar']
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control'})
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 

@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from accounts.forms import RegisterUserForm, UpdateAccountForm
@@ -44,10 +45,14 @@ def my_account(request):
 
 @login_required(login_url="/login")
 def update_account(request):
-    user = request.user
-    form = UpdateAccountForm(request.POST or None, request.FILES, instance=user)
+    form = UpdateAccountForm(instance=request.user)
+    if request.method == "POST":
+        form = UpdateAccountForm(data=request.POST, files=request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('my_account')
+
     context = {
-        'user': user,
         'form': form
     }
     return render(request, 'auth/update_account.html', context)
@@ -91,3 +96,17 @@ def register_page(request):
         'form': form
     }
     return render(request, 'auth/login_register.html', context)
+
+
+def change_password(request):
+    if request.method == "POST":
+        password = request.POST.get('password')
+        password_confirmation = request.POST.get('password_confirmation')
+        if password == password_confirmation:
+            user = request.user
+            user.set_password(password)
+            return redirect('my_account')
+        else:
+            return HttpResponse('Password not confirm success')
+
+    return render(request, 'auth/change_password.html')

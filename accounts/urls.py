@@ -11,5 +11,6 @@ urlpatterns = [
     path('users/<str:pk>/', views.user_details, name="user_details"),
     path('my-account/', views.my_account, name="my_account"),
     path('my-account/edit', views.update_account, name="update_account"),
+    path('my-account/change-password', views.change_password, name="change_password"),
 
 ]
