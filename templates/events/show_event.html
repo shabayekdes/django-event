@@ -7,15 +7,19 @@
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="fw-light">{{ event.name }}</h1>
                 <p class="lead text-muted">{{ event.description }}</p>
-                {% if registered %}
-                    <p>You already registered in this event before!!</p>
-                {% else %}
-                    <a href="{% url 'event_confirmation' event.id %}" class="btn btn-primary my-2">Register</a>
-                {% endif %}
-                {% if submitted %}
-                    <p>You already submitted in this event before!!</p>
-                {% else %}
-                    <a href="{% url 'submission_project' event.id %}" class="btn btn-secondary my-2">Submit Project</a>
+                {% if past_deadline %}
+                    {% if registered %}
+                        <p>You already registered in this event before!!</p>
+                    {% else %}
+                        <a href="{% url 'event_confirmation' event.id %}" class="btn btn-primary my-2">Register</a>
+                    {% endif %}
+                    {% if submitted %}
+                        <p>You already submitted in this event before!!</p>
+                    {% else %}
+                        <a href="{% url 'submission_project' event.id %}" class="btn btn-secondary my-2">Submit
+                            Project</a>
+                    {% endif %}
+
                 {% endif %}
             </div>
         </div>

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
@@ -7,6 +9,11 @@ from events.models import Event, Submission
 
 def show_event(request, pk):
     event = Event.objects.get(id=pk)
+
+    present = datetime.now().timestamp()
+    event_date = event.date.timestamp()
+    past_deadline = present < event_date
+
     registered = False
     submitted = False
     if request.user.is_authenticated:
@@ -17,7 +24,8 @@ def show_event(request, pk):
         'event': event,
         'participants': event.participants.all,
         'registered': registered,
-        'submitted': submitted
+        'submitted': submitted,
+        'past_deadline': past_deadline
     }
     return render(request, 'events/show_event.html', context)
 
