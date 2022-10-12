@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -67,6 +68,9 @@ def login_page(request):
         if user is not None:
             login(request, user)
             return redirect('home')
+        else:
+            messages.error(request, 'Username Or Password was wrong!!')
+            return redirect('login')
 
     context = {
         "page": page
