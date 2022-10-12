@@ -51,6 +51,7 @@ def update_account(request):
         form = UpdateAccountForm(data=request.POST, files=request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
+            messages.success(request, 'You have update account successfully.')
             return redirect('my_account')
 
     context = {
@@ -109,8 +110,10 @@ def change_password(request):
         if password == password_confirmation:
             user = request.user
             user.set_password(password)
+            messages.success(request, 'You have change your password successfully.')
             return redirect('my_account')
         else:
-            return HttpResponse('Password not confirm success')
+            messages.error(request, 'Password not confirm success.')
+            return redirect('change_password')
 
     return render(request, 'auth/change_password.html')
