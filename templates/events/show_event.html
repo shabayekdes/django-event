@@ -1,36 +1,70 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h1>{{ event.name }}</h1>
-    {% if registered %}
-        <p>You already registered in this event before!!</p>
-    {% else %}
-        <a href="{% url 'event_confirmation' event.id %}">Register</a>
-    {% endif %}
-    {% if submitted %}
-        <p>You already submitted in this event before!!</p>
-    {% else %}
-        <a href="{% url 'submission_project' event.id %}">Submit Project</a>
-    {% endif %}
-    <p>{{ event.description }}</p>
 
-    <h1>Submission Projects</h1>
-    {% for sub in event.submission_set.all %}
-        <a href="{% url 'update_submission' sub.id %}">
-            <div>{{ sub.details }}</div>
-        </a>
-    {% endfor %}
-
-    <section>
-        <div>
-            <h1>Users</h1>
-            <div id="users--lists">
-                {% for user in participants %}
-                    <a href="{% url 'user_details' user.id %}">
-                        <div>{{ user.name }}</div>
-                    </a>
-                {% endfor %}
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">{{ event.name }}</h1>
+                <p class="lead text-muted">{{ event.description }}</p>
+                {% if registered %}
+                    <p>You already registered in this event before!!</p>
+                {% else %}
+                    <a href="{% url 'event_confirmation' event.id %}" class="btn btn-primary my-2">Register</a>
+                {% endif %}
+                {% if submitted %}
+                    <p>You already submitted in this event before!!</p>
+                {% else %}
+                    <a href="{% url 'submission_project' event.id %}" class="btn btn-secondary my-2">Submit Project</a>
+                {% endif %}
             </div>
         </div>
     </section>
+
+    <div class="container px-4 py-5" id="featured-3">
+        <h2 class="pb-2 border-bottom">My Submission Projects</h2>
+        <div class="row g-4 pm-5 pt-2 row-cols-1 row-cols-lg-3">
+            {% for submission in event.submission_set.all %}
+                <div class="feature col">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+                    </div>
+                    <h5>{{ submission.details|truncatechars:50 }}</h5>
+                    <a href="{% url 'update_submission' submission.id %}"
+                       class="icon-link d-inline-flex align-items-center">
+                        Update
+                    </a>
+                </div>
+            {% empty %}
+                <p>Don't have any projects.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container marketing">
+        <div class="d-flex mb-2 border-bottom">
+            <div class="p-2 flex-grow-1"><h2>Participants</h2></div>
+        </div>
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+            {% for user in participants %}
+                <div class="col-lg-4">
+                    {% if not user.avatar or user.avatar == "media/users/avatar.png" %}
+                        <svg class="bd-placeholder-img rounded-circle" width="140" height="140"
+                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140"
+                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#777"/>
+                            <text x="50%" y="50%" fill="#777" dy=".3em">Avatar</text>
+                        </svg>
+                    {% else %}
+                        <img class="rounded-circle mx-auto d-block" src="{{ user.avatar.url }}" alt="avatar" width="140"
+                             height="140">
+                    {% endif %}
+                    <h2 class="fw-normal">{{ user.name }}</h2>
+                    <p><a class="btn btn-secondary" href="{% url 'user_details' user.id %}">View Profile &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+            {% endfor %}
+
+        </div><!-- /.row -->
+    </div><!-- /.container marketing -->
+
 {% endblock %}
